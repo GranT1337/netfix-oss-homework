@@ -25,7 +25,6 @@ class EmployeeAPIController {
     WorkspaceAPI workspaceAPIClient
 
     @RequestMapping("/{id}")
-    @HystrixCommand(fallbackMethod = "getDefault")
     def describeEmployee(@PathVariable("id") String id) {
         def employee = employeeService.findEmployee(id)
 
@@ -35,19 +34,6 @@ class EmployeeAPIController {
                 lastName : employee.lastName,
                 email    : employee.email,
                 workspace: workspaceAPIClient.getWorkspaceById(id)
-        ]
-    }
-
-
-    def getDefault(String id) {
-        def employee = employeeService.findEmployee(id)
-
-        [
-                id       : employee.id,
-                firstName: employee.firstName,
-                lastName : employee.lastName,
-                email    : employee.email,
-                workspace: new Workspace("0000001", 1, 1, randomUUID().toString(), WINDOWS)
         ]
     }
 }

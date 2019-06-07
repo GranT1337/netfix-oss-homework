@@ -7,10 +7,12 @@ buildscript {
 	repositories {
 		mavenCentral()
 		jcenter()
+		gradlePluginPortal()
 	}
 	dependencies {
 		classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementPluginVersion}")
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'com.bmuschko:gradle-docker-plugin:4.9.0'
 	}
 }
 
@@ -22,6 +24,7 @@ subprojects {
 	apply plugin: 'eclipse'
 	apply plugin: 'org.springframework.boot'
 	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'com.bmuschko.docker-remote-api'
 	apply from: "${rootProject.projectDir}/libraries.gradle"
 
 	task wrapper(type: Wrapper) {
